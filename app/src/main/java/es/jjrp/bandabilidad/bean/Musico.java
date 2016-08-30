@@ -1,6 +1,7 @@
 package es.jjrp.bandabilidad.bean;
 
 /**
+ * Representa a un músico
  * Created by Juanjo on 23/08/2016.
  */
 public class Musico {
@@ -10,7 +11,7 @@ public class Musico {
     public String gender;
 
     public String toString() {
-        return "" + nombre + " - " + apellidos + ". " + gender;
+        return "" + _id + "_" + nombre + " - " + apellidos + ". " + (gender != null ? gender : "");
     }
 
 }

@@ -25,7 +25,7 @@ public class MusicosActivity extends AppCompatActivity {
         bNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pHelper.createRow("code1", "name1");
+                pHelper.createRow("nombre", "apellidos");
 
                 cargarMusicos();
             }
@@ -35,7 +35,7 @@ public class MusicosActivity extends AppCompatActivity {
         bBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               borrarMusico();
+                borrarMusico();
             }
         });
 
@@ -48,16 +48,20 @@ public class MusicosActivity extends AppCompatActivity {
 
     private void borrarMusico() {
         ListView musicos = (ListView) findViewById(R.id.listMusicos);
-        Object sel = musicos.getSelectedItem();
+        if (musicos.getCheckedItemPosition() >= 0) {
+            String sel = musicos.getItemAtPosition(musicos.getCheckedItemPosition()).toString();
+            String id = sel.split("_")[0];
+            pHelper.deleteRow(Long.parseLong(id));
+            cargarMusicos();
+        }
 
-        cargarMusicos();
     }
 
     private void cargarMusicos() {
         String[] values = buscarMusicos();
 
         ListView musicos = (ListView) findViewById(R.id.listMusicos);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, android.R.id.text1, values);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, android.R.id.text1, values);
         musicos.setAdapter(adapter);
     }
 
