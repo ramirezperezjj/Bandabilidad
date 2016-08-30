@@ -6,4 +6,14 @@
     <string name="title_activity_musicos">MusicosActivity</string>
     <string name="nuevo">Nuevo</string>
     <string name="borrar">Borrar</string>
+    <string name="nuevoMusico">Nuevo músico</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="numero">Número</string>
+    <string name="orden">Órden</string>
+    <string name="guardar">Guardar</string>
+    <string name="dialog_borrar_message">Se borrará el músico seleccionado</string>
+    <string name="dialog_borrar_title">Borrar músico</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
 </resources>
