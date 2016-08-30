@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Bandabilidad</string>
+    <string name="musicos">Músicos</string>
+    <string name="actuaciones">Actuaciones</string>
+    <string name="faltas">Faltas</string>
+    <string name="title_activity_musicos">MusicosActivity</string>
+    <string name="nuevo">Nuevo</string>
+    <string name="borrar">Borrar</string>
+</resources>
