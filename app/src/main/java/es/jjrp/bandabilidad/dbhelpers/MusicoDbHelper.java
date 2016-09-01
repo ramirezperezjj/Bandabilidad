@@ -1,4 +1,4 @@
-package es.jjrp.bandabilidad.dao;
+package es.jjrp.bandabilidad.dbhelpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,9 +12,10 @@ import java.util.List;
 
 import es.jjrp.bandabilidad.bean.Musico;
 
-public class PersonDbHelper {
+public class MusicoDbHelper {
     private static final String DATABASE_CREATE =
             "create table MUSICO(_id integer primary key autoincrement, "
+                    + "orden integer not null unique,"
                     + "nombre text not null,"
                     + "apellidos text not null"
                     + ");";
@@ -23,13 +24,13 @@ public class PersonDbHelper {
     private static final int DATABASE_VERSION = 1;
     private SQLiteDatabase db;
 
-    public PersonDbHelper(Context ctx) {
+    public MusicoDbHelper(Context ctx) {
         try {
             db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
             try {
                 db.execSQL(DATABASE_CREATE);
             } catch (Exception e) {
-                Log.d("BASE_DATOS", "Error creando tabla");
+                Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
 
             }
         } catch (Exception e1) {
@@ -42,15 +43,20 @@ public class PersonDbHelper {
         db.close();
     }
 
-    public void createRow(String nombre, String apellidos) {
+    public void createRow(int orden, String nombre, String apellidos) {
         ContentValues initialValues = new ContentValues();
+        initialValues.put("orden", orden);
         initialValues.put("nombre", nombre);
         initialValues.put("apellidos", apellidos);
         db.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public void deleteRow(long rowId) {
+    public void deleteMusicoById(long rowId) {
         db.delete(DATABASE_TABLE, "_id=" + rowId, null);
+    }
+
+    public void deleteMusicoByOrden(int orden) {
+        db.delete(DATABASE_TABLE, "orden=" + orden, null);
     }
 
     public List<Musico> fetchAllRows() {
@@ -58,14 +64,16 @@ public class PersonDbHelper {
         try {
             Cursor c =
                     db.query(DATABASE_TABLE, new String[]{
-                            "_id", "nombre", "apellidos"}, null, null, null, null, null);
+                            "_id", "orden", "nombre", "apellidos"}, null, null, null, null, null);
             int numRows = c.getCount();
             c.moveToFirst();
             for (int i = 0; i < numRows; ++i) {
                 Musico row = new Musico();
-                row._id = c.getLong(0);
-                row.nombre = c.getString(1);
-                row.apellidos = c.getString(2);
+                int posCol = 0;
+                row._id = c.getLong(posCol++);
+                row.orden = c.getInt(posCol++);
+                row.nombre = c.getString(posCol++);
+                row.apellidos = c.getString(posCol++);
                 ret.add(row);
                 c.moveToNext();
             }
@@ -79,24 +87,27 @@ public class PersonDbHelper {
         Musico row = new Musico();
         Cursor c =
                 db.query(DATABASE_TABLE, new String[]{
-                        "_id", "nombre", "apellidos"}, "_id=" + rowId, null, null, null, null);
+                        "_id", "orden", "nombre", "apellidos"}, "_id=" + rowId, null, null, null, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
-            row._id = c.getLong(0);
-            row.nombre = c.getString(1);
-            row.apellidos = c.getString(2);
+            int posCol = 0;
+            row._id = c.getLong(posCol++);
+            row.orden = c.getInt(posCol++);
+            row.nombre = c.getString(posCol++);
+            row.apellidos = c.getString(posCol++);
             return row;
         } else {
-            row._id = -1;
+            row._id = row.orden = -1;
             row.nombre = row.apellidos = null;
         }
         return row;
     }
 
-    public void updateRow(long rowId, String nombre, String apellidos) {
+    public void updateRow(long rowId, int orden, String nombre, String apellidos) {
         ContentValues args = new ContentValues();
         args.put("nombre", nombre);
         args.put("apellidos", apellidos);
+        args.put("orden", orden);
         db.update(DATABASE_TABLE, args, "_id=" + rowId, null);
     }
 

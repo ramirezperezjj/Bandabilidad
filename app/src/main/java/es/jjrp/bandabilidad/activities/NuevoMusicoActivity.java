@@ -8,29 +8,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import es.jjrp.bandabilidad.R;
-import es.jjrp.bandabilidad.dao.PersonDbHelper;
+import es.jjrp.bandabilidad.dbhelpers.MusicoDbHelper;
 
 public class NuevoMusicoActivity extends AppCompatActivity {
-    PersonDbHelper db;
+    MusicoDbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_musico);
-        db = new PersonDbHelper(this);
+        db = new MusicoDbHelper(this);
         Button b = (Button) findViewById(R.id.btNuevoGuardar);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextView tNombre = (TextView) findViewById(R.id.textNuevoNombre);
                 TextView tApellido = (TextView) findViewById(R.id.textNuevoApellido);
+                TextView tOrden = (TextView) findViewById(R.id.textNuevoNumero);
                 if (tNombre.getText() == null || tNombre.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Falta el nombre", Toast.LENGTH_SHORT).show();
                 } else if (tApellido.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Falta el apellido", Toast.LENGTH_SHORT).show();
+                } else if (tOrden.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Falta el orden", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        db.createRow(tNombre.getText().toString(), tApellido.getText().toString());
+                        db.createRow(Integer.parseInt(tOrden.getText().toString()), tNombre.getText().toString(), tApellido.getText().toString());
 //                    finishActivity(Activity.RESULT_OK);
                         finish();
                     } catch (Exception e) {

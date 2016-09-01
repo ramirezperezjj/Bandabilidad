@@ -8,10 +8,21 @@ public class Musico {
     public long _id;
     public String nombre;
     public String apellidos;
-    public String gender;
+    public int orden;
+
+    public Musico(long _id, String nombre, String apellidos, int orden) {
+        this._id = _id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.orden = orden;
+    }
+
+    public Musico() {
+
+    }
 
     public String toString() {
-        return "" + _id + "_" + nombre + " - " + apellidos + ". " + (gender != null ? gender : "");
+        return "" + orden + ": " + nombre + " - " + apellidos;
     }
 
 }

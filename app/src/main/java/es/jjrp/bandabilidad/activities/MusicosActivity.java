@@ -6,19 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
 
 import es.jjrp.bandabilidad.R;
+import es.jjrp.bandabilidad.adapters.MusicoArrayAdapter;
 import es.jjrp.bandabilidad.bean.Musico;
-import es.jjrp.bandabilidad.dao.PersonDbHelper;
+import es.jjrp.bandabilidad.dbhelpers.MusicoDbHelper;
 
 public class MusicosActivity extends AppCompatActivity {
     private static final int NUEVO_MUSICO_REQUEST = 1;
-    PersonDbHelper pHelper;
+    MusicoDbHelper pHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MusicosActivity extends AppCompatActivity {
             }
         });
 
-        pHelper = new PersonDbHelper(this);
+        pHelper = new MusicoDbHelper(this);
 
         cargarMusicos();
     }
@@ -76,9 +76,9 @@ public class MusicosActivity extends AppCompatActivity {
                 // User clicked OK button
                 ListView musicos = (ListView) findViewById(R.id.listMusicos);
                 if (musicos.getCheckedItemPosition() >= 0) {
-                    String sel = musicos.getItemAtPosition(musicos.getCheckedItemPosition()).toString();
-                    String musicoId = sel.split("_")[0];
-                    pHelper.deleteRow(Long.parseLong(musicoId));
+                    Musico sel = (Musico) musicos.getItemAtPosition(musicos.getCheckedItemPosition());
+
+                    pHelper.deleteMusicoById(sel._id);
                     cargarMusicos();
                 }
             }
@@ -99,21 +99,21 @@ public class MusicosActivity extends AppCompatActivity {
     }
 
     private void cargarMusicos() {
-        String[] values = buscarMusicos();
+        List<Musico> values = buscarMusicos();
 
         ListView musicos = (ListView) findViewById(R.id.listMusicos);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, android.R.id.text1, values);
+        MusicoArrayAdapter adapter = new MusicoArrayAdapter(this, values);
         musicos.setAdapter(adapter);
     }
 
-    private String[] buscarMusicos() {
+    private List<Musico> buscarMusicos() {
 
         List<Musico> musicos = pHelper.fetchAllRows();
-        String[] m = new String[musicos.size()];
-        for (int i = 0; i < musicos.size(); i++) {
-            m[i] = musicos.get(i).toString();
-        }
-        return m;
+//        String[] m = new String[musicos.size()];
+//        for (int i = 0; i < musicos.size(); i++) {
+//            m[i] = musicos.get(i).toString();
+//        }
+        return musicos;
 
     }
 
