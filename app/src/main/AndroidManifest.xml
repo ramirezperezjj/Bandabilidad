@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MusicosActivity" />
-        <activity android:name=".activities.NuevoMusicoActivity"></activity>
+        <activity android:name=".activities.NuevoMusicoActivity" />
+        <activity android:name=".activities.ActuacionesActivity"></activity>
     </application>
 
 </manifest>

@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getBaseContext(), ActuacionesActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), ActuacionesActivity.class);
+                startActivity(intent);
             }
         });
         b = (Button) findViewById(R.id.btnMainFaltas);

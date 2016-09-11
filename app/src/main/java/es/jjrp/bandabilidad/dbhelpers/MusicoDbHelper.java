@@ -15,7 +15,7 @@ import es.jjrp.bandabilidad.bean.Musico;
 public class MusicoDbHelper {
     private static final String DATABASE_CREATE =
             "create table MUSICO(_id integer primary key autoincrement, "
-                    + "orden integer not null unique,"
+                    + "orden integer,"
                     + "nombre text not null,"
                     + "apellidos text not null"
                     + ");";
@@ -43,12 +43,16 @@ public class MusicoDbHelper {
         db.close();
     }
 
-    public void createRow(int orden, String nombre, String apellidos) {
+    public void createRow(Integer orden, String nombre, String apellidos) {
         ContentValues initialValues = new ContentValues();
         initialValues.put("orden", orden);
         initialValues.put("nombre", nombre);
         initialValues.put("apellidos", apellidos);
         db.insert(DATABASE_TABLE, null, initialValues);
+    }
+
+    public void createRow(String nombre, String apellidos) {
+        createRow(null, nombre, apellidos);
     }
 
     public void deleteMusicoById(long rowId) {

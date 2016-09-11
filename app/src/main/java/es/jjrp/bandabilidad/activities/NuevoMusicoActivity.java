@@ -24,16 +24,14 @@ public class NuevoMusicoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextView tNombre = (TextView) findViewById(R.id.textNuevoNombre);
                 TextView tApellido = (TextView) findViewById(R.id.textNuevoApellido);
-                TextView tOrden = (TextView) findViewById(R.id.textNuevoNumero);
+//                TextView tOrden = (TextView) findViewById(R.id.textNuevoNumero);
                 if (tNombre.getText() == null || tNombre.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Falta el nombre", Toast.LENGTH_SHORT).show();
                 } else if (tApellido.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Falta el apellido", Toast.LENGTH_SHORT).show();
-                } else if (tOrden.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Falta el orden", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        db.createRow(Integer.parseInt(tOrden.getText().toString()), tNombre.getText().toString(), tApellido.getText().toString());
+                        db.createRow(tNombre.getText().toString(), tApellido.getText().toString());
 //                    finishActivity(Activity.RESULT_OK);
                         finish();
                     } catch (Exception e) {

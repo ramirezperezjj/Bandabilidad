@@ -10,7 +10,7 @@
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="numero">Número</string>
-    <string name="orden">Órden</string>
+    <string name="orden">Orden</string>
     <string name="guardar">Guardar</string>
     <string name="dialog_borrar_message">Se borrará el músico seleccionado</string>
     <string name="dialog_borrar_title">Borrar músico</string>
