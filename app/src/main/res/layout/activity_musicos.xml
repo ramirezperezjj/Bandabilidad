@@ -31,12 +31,4 @@
         android:choiceMode="singleChoice"
         android:headerDividersEnabled="false" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/borrar"
-        android:id="@+id/btnBorrarMusico"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnNuevoMusico"
-        android:layout_toStartOf="@+id/btnNuevoMusico" />
 </RelativeLayout>
