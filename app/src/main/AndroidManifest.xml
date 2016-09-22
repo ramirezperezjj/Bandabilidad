@@ -18,7 +18,9 @@
         <activity android:name=".activities.MusicosActivity" />
         <activity android:name=".activities.NuevoMusicoActivity" />
         <activity android:name=".activities.ActuacionesActivity" />
-        <activity android:name=".activities.DetalleMusicoActivity"></activity>
+        <activity android:name=".activities.DetalleMusicoActivity" />
+        <activity android:name=".activities.DetalleActuacionActivity" />
+        <activity android:name=".activities.NuevaActuacionActivity"></activity>
     </application>
 
 </manifest>

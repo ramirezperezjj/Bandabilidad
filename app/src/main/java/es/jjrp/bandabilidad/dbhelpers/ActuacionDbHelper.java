@@ -6,12 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import es.jjrp.bandabilidad.bean.Actuacion;
+import es.jjrp.bandabilidad.utils.Constantes;
 
 /**
  * Created by Juanjo on 03/09/2016.
@@ -34,7 +34,7 @@ public class ActuacionDbHelper {
     private static final String DATABASE_TABLE_ACTUACION = "ACTUACION";
     private static final String DATABASE_TABLE_TIPO_ACTUACION = "TIPO_ACTUACION";
     private static final int DATABASE_VERSION = 1;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
     private SQLiteDatabase db;
 
     public ActuacionDbHelper(Context ctx) {
@@ -42,20 +42,14 @@ public class ActuacionDbHelper {
             db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
             try {
                 db.execSQL(DATABASE_CREATE_ACTUACION);
+                db.execSQL(DATABASE_CREATE_TIPO_ACTUACION);
+                //Si llega aquí, ha creado la tabla, y estará vacía, la rellenamos
+                //con datos fijos
+                createTipoActuacion(0, "Procesión");
+                createTipoActuacion(1, "Pasacalles");
+                createTipoActuacion(2, "Concierto");
+                createTipoActuacion(3, "Romería");
 
-                try {
-                    db.execSQL(DATABASE_CREATE_TIPO_ACTUACION);
-                    //Si llega aquí, ha creado la tabla, y estará vacía, la rellenamos
-                    //con datos fijos
-                    createTipoActuacion(0, "Procesión");
-                    createTipoActuacion(1, "Pasacalles");
-                    createTipoActuacion(2, "Concierto");
-                    createTipoActuacion(3, "Romería");
-
-                } catch (Exception e) {
-                    //Suponemos que el error que llega aquí es porque la tabla ya existe
-                    Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
-                }
 
             } catch (Exception e) {
                 Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
@@ -83,7 +77,7 @@ public class ActuacionDbHelper {
 
         initialValues.put("tipo", tipo.ordinal());
         initialValues.put("nombre", nombre);
-        initialValues.put("fecha", sdf.format(fecha));
+        initialValues.put("fecha", Constantes.SDF.format(fecha));
         initialValues.put("horas", horas);
         initialValues.put("ciudad", ciudad);
         initialValues.put("precio", precio);
@@ -103,7 +97,7 @@ public class ActuacionDbHelper {
                 int posCol = 0;
                 row._id = c.getLong(posCol++);
                 row.tipo = Actuacion.TIPO.getTipo(c.getInt(posCol++));
-                row.fecha = sdf.parse(c.getString(posCol++));
+                row.fecha = Constantes.SDF.parse(c.getString(posCol++));
                 row.horas = c.getInt(posCol++);
                 row.nombre = c.getString(posCol++);
                 row.ciudad = c.getString(posCol++);

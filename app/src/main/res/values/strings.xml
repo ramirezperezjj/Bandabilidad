@@ -16,4 +16,6 @@
     <string name="dialog_borrar_title">Borrar músico</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
+    <string name="actuacion">Actuación</string>
+    <string name="ciudad">Ciudad</string>
 </resources>

@@ -31,7 +31,7 @@ public class MusicosActivity extends AppCompatActivity {
 //                intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 startActivityForResult(intent, NUEVO_MUSICO_REQUEST);
 
-                cargarMusicos();
+//                cargarMusicos();
             }
         });
 
@@ -46,6 +46,9 @@ public class MusicosActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case NUEVO_MUSICO_REQUEST:
+                cargarMusicos();
+                break;
+            case MusicoArrayAdapter.MOSTRAR_DETALLE_MUSICO:
                 cargarMusicos();
                 break;
             default:

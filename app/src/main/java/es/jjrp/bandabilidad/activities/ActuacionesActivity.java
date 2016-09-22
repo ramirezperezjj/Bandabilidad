@@ -1,19 +1,22 @@
 package es.jjrp.bandabilidad.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
 
-import java.util.Date;
+import java.util.List;
 
 import es.jjrp.bandabilidad.R;
+import es.jjrp.bandabilidad.adapters.ActuacionesArrayAdapter;
 import es.jjrp.bandabilidad.bean.Actuacion;
 import es.jjrp.bandabilidad.dbhelpers.ActuacionDbHelper;
 
 public class ActuacionesActivity extends AppCompatActivity {
 
+    private static final int NUEVO_ACTUACION_REQUEST = 4;
     ActuacionDbHelper dbActuaciones;
 
     @Override
@@ -27,11 +30,32 @@ public class ActuacionesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                dbActuaciones.createActuacion(Actuacion.TIPO.CONCIERTO, "concierto de verano arriba", new Date(), 2, "Rute", 0);
-
-                String escribir = dbActuaciones.obtenerTodasActuaciones().get(0)._id + dbActuaciones.obtenerTodasActuaciones().get(0).nombre;
-                Toast.makeText(getApplicationContext(), escribir, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), NuevaActuacionActivity.class);
+                startActivityForResult(intent, NUEVO_ACTUACION_REQUEST);
             }
         });
+
+        cargarActuaciones();
+    }
+
+    private void cargarActuaciones() {
+        List<Actuacion> values = dbActuaciones.obtenerTodasActuaciones();
+
+        ListView musicos = (ListView) findViewById(R.id.listaActuaciones);
+        ActuacionesArrayAdapter adapter = new ActuacionesArrayAdapter(this, values);
+        musicos.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case NUEVO_ACTUACION_REQUEST:
+                cargarActuaciones();
+                break;
+            default:
+                break;
+        }
+
     }
 }

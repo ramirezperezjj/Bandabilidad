@@ -13,6 +13,7 @@ import java.util.List;
 
 import es.jjrp.bandabilidad.R;
 import es.jjrp.bandabilidad.activities.DetalleMusicoActivity;
+import es.jjrp.bandabilidad.activities.MusicosActivity;
 import es.jjrp.bandabilidad.bean.Musico;
 
 /**
@@ -20,6 +21,8 @@ import es.jjrp.bandabilidad.bean.Musico;
  * Created by Juanjo on 31/08/2016.
  */
 public class MusicoArrayAdapter extends ArrayAdapter<Musico> {
+
+    public static final int MOSTRAR_DETALLE_MUSICO = 2;
 
     public MusicoArrayAdapter(Context context, List<Musico> musicos) {
         super(context, ListView.CHOICE_MODE_SINGLE, musicos);
@@ -47,7 +50,7 @@ public class MusicoArrayAdapter extends ArrayAdapter<Musico> {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), DetalleMusicoActivity.class);
                 intent.putExtra("musico", musico);
-                getContext().startActivity(intent);
+                ((MusicosActivity) getContext()).startActivityForResult(intent, MOSTRAR_DETALLE_MUSICO);
             }
         });
 

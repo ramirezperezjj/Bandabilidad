@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.jjrp.bandabilidad.R;
 import es.jjrp.bandabilidad.bean.Musico;
@@ -29,7 +30,37 @@ public class DetalleMusicoActivity extends AppCompatActivity {
         tv.setText(musico.apellidos);
 
         Button b = (Button) findViewById(R.id.btnDetalleBorrar);
-        b.setOnClickListener(new View.Onc);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                borrarMusico();
+            }
+        });
+
+        b = (Button) findViewById(R.id.btnDetalleGuardar);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarMusico();
+            }
+        });
+    }
+
+    private void guardarMusico() {
+        TextView tv = (TextView) findViewById(R.id.tvDetalleNombre);
+        String nombre = tv.getText().toString();
+        tv = (TextView) findViewById(R.id.tvDetalleApellidos);
+        String apellidos = tv.getText().toString();
+        if (nombre == null || nombre.isEmpty() || apellidos == null || apellidos.isEmpty()) {
+            Toast.makeText(this, "El nombre y apellidos son obligatorios", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                pHelper.updateRow(musico._id, nombre, apellidos);
+                Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "Error guardando", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 

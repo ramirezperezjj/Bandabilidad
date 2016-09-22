@@ -107,11 +107,10 @@ public class MusicoDbHelper {
         return row;
     }
 
-    public void updateRow(long rowId, int orden, String nombre, String apellidos) {
+    public void updateRow(long rowId, String nombre, String apellidos) {
         ContentValues args = new ContentValues();
         args.put("nombre", nombre);
         args.put("apellidos", apellidos);
-        args.put("orden", orden);
         db.update(DATABASE_TABLE, args, "_id=" + rowId, null);
     }
 
