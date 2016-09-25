@@ -30,7 +30,7 @@ public class ActuacionesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getBaseContext(), NuevaActuacionActivity.class);
+                Intent intent = new Intent(getBaseContext(), DetalleActuacionActivity.class);
                 startActivityForResult(intent, NUEVO_ACTUACION_REQUEST);
             }
         });
@@ -54,6 +54,7 @@ public class ActuacionesActivity extends AppCompatActivity {
                 cargarActuaciones();
                 break;
             default:
+                cargarActuaciones();
                 break;
         }
 

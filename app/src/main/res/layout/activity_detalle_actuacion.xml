@@ -60,4 +60,44 @@
         android:layout_below="@+id/tvDetalleCiudad"
         android:layout_centerHorizontal="true"
         android:id="@+id/spinner" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/spinner"
+        android:id="@+id/tvDetalleActuacionFechaHora"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/tvDetalleCiudad"
+        android:layout_alignStart="@+id/tvDetalleCiudad"
+        android:inputType="datetime" />
+
+    <TextView
+        android:text="@string/fechaHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp"
+        android:id="@+id/labelDetalleFecha" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnDetalleActuacionGuardar"
+        android:text="@string/guardar" />
+
+    <Button
+        android:text="@string/borrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnDetalleActuacionGuardar"
+        android:layout_toStartOf="@+id/btnDetalleActuacionGuardar"
+        android:id="@+id/btnDetalleActuacionBorrar" />
 </RelativeLayout>

@@ -27,7 +27,7 @@ public class MusicosActivity extends AppCompatActivity {
         bNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), NuevoMusicoActivity.class);
+                Intent intent = new Intent(getBaseContext(), DetalleMusicoActivity.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 startActivityForResult(intent, NUEVO_MUSICO_REQUEST);
 

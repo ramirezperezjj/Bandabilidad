@@ -40,7 +40,7 @@ public class ActuacionesArrayAdapter extends ArrayAdapter<Actuacion> {
         TextView tvFecha = (TextView) convertView.findViewById(R.id.tvListaFechaActuacion);
         TextView tvTipo = (TextView) convertView.findViewById(R.id.tvListaTipoActuacion);
 
-        tvNombre.setText(actuacion.nombre + ". ");
+        tvNombre.setText(actuacion.nombre);
         tvFecha.setText(Constantes.SDF.format(actuacion.fecha));
         tvTipo.setText(actuacion.tipo.name());
 

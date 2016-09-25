@@ -7,5 +7,5 @@ import java.text.SimpleDateFormat;
  */
 
 public class Constantes {
-    public static SimpleDateFormat SDF = new SimpleDateFormat("dd/mm/yyyy HH:MM");
+    public static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 }

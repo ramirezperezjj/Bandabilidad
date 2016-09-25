@@ -110,4 +110,20 @@ public class ActuacionDbHelper {
         }
         return ret;
     }
+
+    public void updateActuacion(Actuacion actuacion) {
+        ContentValues args = new ContentValues();
+        args.put("ciudad", actuacion.ciudad);
+        args.put("horas", actuacion.horas);
+        args.put("nombre", actuacion.nombre);
+        args.put("precio", actuacion.precio);
+        args.put("fecha", Constantes.SDF.format(actuacion.fecha));
+        args.put("tipo", actuacion.tipo.ordinal());
+
+        db.update(DATABASE_TABLE_ACTUACION, args, "_id=" + actuacion._id, null);
+    }
+
+    public void deleteAcutacionById(long rowId) {
+        db.delete(DATABASE_TABLE_ACTUACION, "_id=" + rowId, null);
+    }
 }

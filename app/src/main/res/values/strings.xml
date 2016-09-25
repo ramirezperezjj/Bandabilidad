@@ -18,4 +18,5 @@
     <string name="cancel">Cancelar</string>
     <string name="actuacion">Actuación</string>
     <string name="ciudad">Ciudad</string>
+    <string name="fechaHora">Fecha/Hora</string>
 </resources>

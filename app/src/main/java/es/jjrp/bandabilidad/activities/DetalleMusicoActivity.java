@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,26 +25,56 @@ public class DetalleMusicoActivity extends AppCompatActivity {
         pHelper = new MusicoDbHelper(this);
 
         musico = (Musico) getIntent().getSerializableExtra("musico");
-        TextView tv = (TextView) findViewById(R.id.tvDetalleNombre);
-        tv.setText(musico.nombre);
-        tv = (TextView) findViewById(R.id.tvDetalleApellidos);
-        tv.setText(musico.apellidos);
+        if (musico == null) {
+            Button b = (Button) findViewById(R.id.btnDetalleBorrar);
+            ((ViewGroup) b.getParent()).removeView(b);
 
-        Button b = (Button) findViewById(R.id.btnDetalleBorrar);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                borrarMusico();
-            }
-        });
+            b = (Button) findViewById(R.id.btnDetalleGuardar);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TextView tNombre = (TextView) findViewById(R.id.tvDetalleNombre);
+                    TextView tApellido = (TextView) findViewById(R.id.tvDetalleApellidos);
+//                TextView tOrden = (TextView) findViewById(R.id.textNuevoNumero);
+                    if (tNombre.getText() == null || tNombre.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getBaseContext(), "Falta el nombre", Toast.LENGTH_SHORT).show();
+                    } else if (tApellido.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getBaseContext(), "Falta el apellido", Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            pHelper.createRow(tNombre.getText().toString(), tApellido.getText().toString());
+//                    finishActivity(Activity.RESULT_OK);
+                            finish();
+                        } catch (Exception e) {
+                            Toast.makeText(getBaseContext(), "Error creando músico: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
 
-        b = (Button) findViewById(R.id.btnDetalleGuardar);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                guardarMusico();
-            }
-        });
+        } else {
+            //Detalle, actualizar
+            TextView tv = (TextView) findViewById(R.id.tvDetalleNombre);
+            tv.setText(musico.nombre);
+            tv = (TextView) findViewById(R.id.tvDetalleApellidos);
+            tv.setText(musico.apellidos);
+
+            Button b = (Button) findViewById(R.id.btnDetalleBorrar);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    borrarMusico();
+                }
+            });
+
+            b = (Button) findViewById(R.id.btnDetalleGuardar);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    guardarMusico();
+                }
+            });
+        }
     }
 
     private void guardarMusico() {
