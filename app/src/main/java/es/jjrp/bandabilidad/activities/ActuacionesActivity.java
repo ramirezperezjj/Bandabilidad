@@ -2,9 +2,9 @@ package es.jjrp.bandabilidad.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ActuacionesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actuaciones);
         dbActuaciones = new ActuacionDbHelper(this);
 
-        Button b = (Button) findViewById(R.id.btnNuevoActuacion);
+        FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fbtnNuevaActuacion);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

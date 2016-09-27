@@ -17,58 +17,44 @@ import es.jjrp.bandabilidad.dbhelpers.MusicoDbHelper;
 public class DetalleMusicoActivity extends AppCompatActivity {
     MusicoDbHelper pHelper;
     Musico musico;
+    Button btnBorrar;
+    Button btnGuardar;
+    TextView tvNombre;
+    TextView tvApellido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_musico);
         pHelper = new MusicoDbHelper(this);
-
         musico = (Musico) getIntent().getSerializableExtra("musico");
-        if (musico == null) {
-            Button b = (Button) findViewById(R.id.btnDetalleBorrar);
-            ((ViewGroup) b.getParent()).removeView(b);
+        btnBorrar = (Button) findViewById(R.id.btnDetalleBorrar);
+        btnGuardar = (Button) findViewById(R.id.btnDetalleGuardar);
+        tvNombre = (TextView) findViewById(R.id.tvDetalleNombre);
+        tvApellido = (TextView) findViewById(R.id.tvDetalleApellidos);
 
-            b = (Button) findViewById(R.id.btnDetalleGuardar);
-            b.setOnClickListener(new View.OnClickListener() {
+        if (musico == null) {
+//Nuevo músico
+            ((ViewGroup) btnBorrar.getParent()).removeView(btnBorrar);
+            btnGuardar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView tNombre = (TextView) findViewById(R.id.tvDetalleNombre);
-                    TextView tApellido = (TextView) findViewById(R.id.tvDetalleApellidos);
-//                TextView tOrden = (TextView) findViewById(R.id.textNuevoNumero);
-                    if (tNombre.getText() == null || tNombre.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(getBaseContext(), "Falta el nombre", Toast.LENGTH_SHORT).show();
-                    } else if (tApellido.getText() == null || tApellido.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(getBaseContext(), "Falta el apellido", Toast.LENGTH_SHORT).show();
-                    } else {
-                        try {
-                            pHelper.createRow(tNombre.getText().toString(), tApellido.getText().toString());
-//                    finishActivity(Activity.RESULT_OK);
-                            finish();
-                        } catch (Exception e) {
-                            Toast.makeText(getBaseContext(), "Error creando músico: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    nuevoMusico();
                 }
             });
 
         } else {
             //Detalle, actualizar
-            TextView tv = (TextView) findViewById(R.id.tvDetalleNombre);
-            tv.setText(musico.nombre);
-            tv = (TextView) findViewById(R.id.tvDetalleApellidos);
-            tv.setText(musico.apellidos);
+            tvNombre.setText(musico.nombre);
+            tvApellido.setText(musico.apellidos);
 
-            Button b = (Button) findViewById(R.id.btnDetalleBorrar);
-            b.setOnClickListener(new View.OnClickListener() {
+            btnBorrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     borrarMusico();
                 }
             });
-
-            b = (Button) findViewById(R.id.btnDetalleGuardar);
-            b.setOnClickListener(new View.OnClickListener() {
+            btnGuardar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     guardarMusico();
@@ -77,11 +63,24 @@ public class DetalleMusicoActivity extends AppCompatActivity {
         }
     }
 
+    private void nuevoMusico() {
+        String nombre = tvNombre.getText().toString();
+        String apellidos = tvApellido.getText().toString();
+        if (nombre == null || nombre.isEmpty() || apellidos == null || apellidos.isEmpty()) {
+            Toast.makeText(getBaseContext(), "Falta el nombre o apellido", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                pHelper.createRow(tvNombre.getText().toString(), tvApellido.getText().toString());
+                finish();
+            } catch (Exception e) {
+                Toast.makeText(getBaseContext(), "Error creando músico: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void guardarMusico() {
-        TextView tv = (TextView) findViewById(R.id.tvDetalleNombre);
-        String nombre = tv.getText().toString();
-        tv = (TextView) findViewById(R.id.tvDetalleApellidos);
-        String apellidos = tv.getText().toString();
+        String nombre = tvNombre.getText().toString();
+        String apellidos = tvApellido.getText().toString();
         if (nombre == null || nombre.isEmpty() || apellidos == null || apellidos.isEmpty()) {
             Toast.makeText(this, "El nombre y apellidos son obligatorios", Toast.LENGTH_SHORT).show();
         } else {
