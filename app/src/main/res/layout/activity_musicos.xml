@@ -33,6 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         app:rippleColor="?attr/actionMenuTextColor"
-        app:backgroundTint="?attr/colorButtonNormal" />
+        app:backgroundTint="@color/colorPrimary"
+        android:tint="@android:color/white" />
 
 </RelativeLayout>

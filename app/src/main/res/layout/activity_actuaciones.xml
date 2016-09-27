@@ -28,5 +28,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        app:backgroundTint="?attr/colorButtonNormal" />
+        app:backgroundTint="@color/colorPrimary"
+        android:tint="@android:color/white" />
 </RelativeLayout>
