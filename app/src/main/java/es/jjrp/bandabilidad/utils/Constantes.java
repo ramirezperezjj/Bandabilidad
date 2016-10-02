@@ -8,4 +8,7 @@ import java.text.SimpleDateFormat;
 
 public class Constantes {
     public static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    public static int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "PERSONALDB";
 }

@@ -19,6 +19,7 @@
         <activity android:name=".activities.ActuacionesActivity" />
         <activity android:name=".activities.DetalleMusicoActivity" />
         <activity android:name=".activities.DetalleActuacionActivity" />
+        <activity android:name=".activities.FaltasActivity"></activity>
     </application>
 
 </manifest>

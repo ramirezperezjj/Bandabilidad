@@ -13,6 +13,7 @@ import es.jjrp.bandabilidad.R;
 import es.jjrp.bandabilidad.adapters.ActuacionesArrayAdapter;
 import es.jjrp.bandabilidad.bean.Actuacion;
 import es.jjrp.bandabilidad.dbhelpers.ActuacionDbHelper;
+import es.jjrp.bandabilidad.utils.Constantes;
 
 public class ActuacionesActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class ActuacionesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actuaciones);
-        dbActuaciones = new ActuacionDbHelper(this);
+        dbActuaciones = new ActuacionDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
 
         FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fbtnNuevaActuacion);
         b.setOnClickListener(new View.OnClickListener() {

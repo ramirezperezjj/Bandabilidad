@@ -39,7 +39,7 @@ public class DetalleActuacionActivity extends AppCompatActivity {
         tvFechaHora = (TextView) findViewById(R.id.tvDetalleActuacionFechaHora);
         tvCiudad = (TextView) findViewById(R.id.tvDetalleCiudad);
 
-        dbHelper = new ActuacionDbHelper(this);
+        dbHelper = new ActuacionDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
         actuacion = (Actuacion) getIntent().getSerializableExtra("actuacion");
         sp.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Actuacion.TIPO.stringValues()));
 

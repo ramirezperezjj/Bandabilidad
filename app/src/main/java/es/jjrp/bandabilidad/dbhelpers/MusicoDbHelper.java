@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,43 +13,44 @@ import java.util.List;
 
 import es.jjrp.bandabilidad.bean.Musico;
 
-public class MusicoDbHelper {
+public class MusicoDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE =
-            "create table MUSICO(_id integer primary key autoincrement, "
+            "create table IF NOT EXISTS MUSICO(_id integer primary key autoincrement, "
                     + "orden integer,"
                     + "nombre text not null,"
                     + "apellidos text not null"
                     + ");";
-    private static final String DATABASE_NAME = "PERSONALDB";
+
     private static final String DATABASE_TABLE = "MUSICO";
     private static final int DATABASE_VERSION = 1;
-    private SQLiteDatabase db;
 
-    public MusicoDbHelper(Context ctx) {
-        try {
-            db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
-            try {
-                db.execSQL(DATABASE_CREATE);
-            } catch (Exception e) {
-                Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
-
-            }
-        } catch (Exception e1) {
-            Log.d("BASE_DATOS", "Error creando database");
-            db = null;
-        }
+    public MusicoDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
     }
 
-    public void close() {
-        db.close();
-    }
+
+//    public MusicoDbHelper(Context ctx) {
+//        try {
+//            db = ctx.openOrCreateDatabase(Constantes.DATABASE_NAME, Context.MODE_PRIVATE, null);
+//            try {
+//                db.execSQL(DATABASE_CREATE);
+//            } catch (Exception e) {
+//                Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
+//
+//            }
+//        } catch (Exception e1) {
+//            Log.d("BASE_DATOS", "Error creando database");
+//            db = null;
+//        }
+//    }
+
 
     public void createRow(Integer orden, String nombre, String apellidos) {
         ContentValues initialValues = new ContentValues();
         initialValues.put("orden", orden);
         initialValues.put("nombre", nombre);
         initialValues.put("apellidos", apellidos);
-        db.insert(DATABASE_TABLE, null, initialValues);
+        getWritableDatabase().insert(DATABASE_TABLE, null, initialValues);
     }
 
     public void createRow(String nombre, String apellidos) {
@@ -56,18 +58,18 @@ public class MusicoDbHelper {
     }
 
     public void deleteMusicoById(long rowId) {
-        db.delete(DATABASE_TABLE, "_id=" + rowId, null);
+        getWritableDatabase().delete(DATABASE_TABLE, "_id=" + rowId, null);
     }
 
     public void deleteMusicoByOrden(int orden) {
-        db.delete(DATABASE_TABLE, "orden=" + orden, null);
+        getWritableDatabase().delete(DATABASE_TABLE, "orden=" + orden, null);
     }
 
     public List<Musico> fetchAllRows() {
         ArrayList<Musico> ret = new ArrayList<Musico>();
         try {
             Cursor c =
-                    db.query(DATABASE_TABLE, new String[]{
+                    getReadableDatabase().query(DATABASE_TABLE, new String[]{
                             "_id", "orden", "nombre", "apellidos"}, null, null, null, null, null);
             int numRows = c.getCount();
             c.moveToFirst();
@@ -90,7 +92,7 @@ public class MusicoDbHelper {
     public Musico fetchRow(long rowId) {
         Musico row = new Musico();
         Cursor c =
-                db.query(DATABASE_TABLE, new String[]{
+                getReadableDatabase().query(DATABASE_TABLE, new String[]{
                         "_id", "orden", "nombre", "apellidos"}, "_id=" + rowId, null, null, null, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
@@ -111,12 +113,12 @@ public class MusicoDbHelper {
         ContentValues args = new ContentValues();
         args.put("nombre", nombre);
         args.put("apellidos", apellidos);
-        db.update(DATABASE_TABLE, args, "_id=" + rowId, null);
+        getWritableDatabase().update(DATABASE_TABLE, args, "_id=" + rowId, null);
     }
 
     public Cursor getAllRows() {
         try {
-            return db.query(DATABASE_TABLE, new String[]{
+            return getReadableDatabase().query(DATABASE_TABLE, new String[]{
                     "_id", "nombre", "apellidos"}, null, null, null, null, null);
         } catch (SQLException e) {
             Log.e("Exception on query", e.toString());
@@ -125,4 +127,13 @@ public class MusicoDbHelper {
     }
 
 
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DATABASE_CREATE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int versionAntigua, int versionNueva) {
+
+    }
 }

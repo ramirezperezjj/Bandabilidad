@@ -13,6 +13,7 @@ import android.widget.Toast;
 import es.jjrp.bandabilidad.R;
 import es.jjrp.bandabilidad.bean.Musico;
 import es.jjrp.bandabilidad.dbhelpers.MusicoDbHelper;
+import es.jjrp.bandabilidad.utils.Constantes;
 
 public class DetalleMusicoActivity extends AppCompatActivity {
     MusicoDbHelper pHelper;
@@ -26,7 +27,7 @@ public class DetalleMusicoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_musico);
-        pHelper = new MusicoDbHelper(this);
+        pHelper = new MusicoDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
         musico = (Musico) getIntent().getSerializableExtra("musico");
         btnBorrar = (Button) findViewById(R.id.btnDetalleBorrar);
         btnGuardar = (Button) findViewById(R.id.btnDetalleGuardar);
