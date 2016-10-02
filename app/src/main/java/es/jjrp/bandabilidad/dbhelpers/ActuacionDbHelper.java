@@ -26,13 +26,9 @@ public class ActuacionDbHelper {
                     + "ciudad text,"
                     + "precio real"
                     + ");";
-    private static final String DATABASE_CREATE_TIPO_ACTUACION =
-            "create table TIPO_ACTUACION(_id integer primary key, "
-                    + "desc text not null"
-                    + ");";
+
     private static final String DATABASE_NAME = "PERSONALDB";
     private static final String DATABASE_TABLE_ACTUACION = "ACTUACION";
-    private static final String DATABASE_TABLE_TIPO_ACTUACION = "TIPO_ACTUACION";
     private static final int DATABASE_VERSION = 1;
 
     private SQLiteDatabase db;
@@ -42,14 +38,6 @@ public class ActuacionDbHelper {
             db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
             try {
                 db.execSQL(DATABASE_CREATE_ACTUACION);
-                db.execSQL(DATABASE_CREATE_TIPO_ACTUACION);
-                //Si llega aquí, ha creado la tabla, y estará vacía, la rellenamos
-                //con datos fijos
-                createTipoActuacion(0, "Procesión");
-                createTipoActuacion(1, "Pasacalles");
-                createTipoActuacion(2, "Concierto");
-                createTipoActuacion(3, "Romería");
-
 
             } catch (Exception e) {
                 Log.d("BASE_DATOS", "No se crea la tabla porque: " + e.getMessage());
@@ -62,13 +50,6 @@ public class ActuacionDbHelper {
 
     public void close() {
         db.close();
-    }
-
-    public void createTipoActuacion(int id, String desc) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put("_id", id);
-        initialValues.put("desc", desc);
-        db.insert(DATABASE_TABLE_TIPO_ACTUACION, null, initialValues);
     }
 
     public void createActuacion(Actuacion.TIPO tipo, String nombre, Date fecha, int horas, String ciudad, double precio) {
