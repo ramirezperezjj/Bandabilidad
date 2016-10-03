@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by Juanjo on 23/08/2016.
  */
 public class Musico implements Serializable {
-    
+
     public long _id;
     public String nombre;
     public String apellidos;
@@ -25,7 +25,7 @@ public class Musico implements Serializable {
     }
 
     public String toString() {
-        return "" + orden + ": " + nombre + " - " + apellidos;
+        return nombre + " - " + apellidos;
     }
 
 }

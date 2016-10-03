@@ -19,4 +19,6 @@
     <string name="actuacion">Actuación</string>
     <string name="ciudad">Ciudad</string>
     <string name="fechaHora">Fecha/Hora</string>
+    <string name="tarde">Tarde</string>
+    <string name="anotar">Anotar</string>
 </resources>

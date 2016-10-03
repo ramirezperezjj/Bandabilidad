@@ -5,27 +5,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.jjrp.bandabilidad.bean.Musico;
+import es.jjrp.bandabilidad.utils.Constantes;
 
-public class MusicoDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_CREATE =
-            "create table IF NOT EXISTS MUSICO(_id integer primary key autoincrement, "
-                    + "orden integer,"
-                    + "nombre text not null,"
-                    + "apellidos text not null"
-                    + ");";
+public class MusicoDbHelper extends BaseDbHelper {
 
-    private static final String DATABASE_TABLE = "MUSICO";
-    private static final int DATABASE_VERSION = 1;
+    private final SQLiteDatabase db;
 
-    public MusicoDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MusicoDbHelper(Context context) {
+        super(context);
+        db = getWritableDatabase();
     }
 
 
@@ -50,7 +44,7 @@ public class MusicoDbHelper extends SQLiteOpenHelper {
         initialValues.put("orden", orden);
         initialValues.put("nombre", nombre);
         initialValues.put("apellidos", apellidos);
-        getWritableDatabase().insert(DATABASE_TABLE, null, initialValues);
+        db.insert(DATABASE_TABLE_MUSICO, null, initialValues);
     }
 
     public void createRow(String nombre, String apellidos) {
@@ -58,18 +52,18 @@ public class MusicoDbHelper extends SQLiteOpenHelper {
     }
 
     public void deleteMusicoById(long rowId) {
-        getWritableDatabase().delete(DATABASE_TABLE, "_id=" + rowId, null);
+        db.delete(DATABASE_TABLE_MUSICO, "_id=" + rowId, null);
     }
 
     public void deleteMusicoByOrden(int orden) {
-        getWritableDatabase().delete(DATABASE_TABLE, "orden=" + orden, null);
+        db.delete(DATABASE_TABLE_MUSICO, "orden=" + orden, null);
     }
 
     public List<Musico> fetchAllRows() {
         ArrayList<Musico> ret = new ArrayList<Musico>();
         try {
             Cursor c =
-                    getReadableDatabase().query(DATABASE_TABLE, new String[]{
+                    db.query(DATABASE_TABLE_MUSICO, new String[]{
                             "_id", "orden", "nombre", "apellidos"}, null, null, null, null, null);
             int numRows = c.getCount();
             c.moveToFirst();
@@ -92,7 +86,7 @@ public class MusicoDbHelper extends SQLiteOpenHelper {
     public Musico fetchRow(long rowId) {
         Musico row = new Musico();
         Cursor c =
-                getReadableDatabase().query(DATABASE_TABLE, new String[]{
+                db.query(DATABASE_TABLE_MUSICO, new String[]{
                         "_id", "orden", "nombre", "apellidos"}, "_id=" + rowId, null, null, null, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
@@ -113,12 +107,13 @@ public class MusicoDbHelper extends SQLiteOpenHelper {
         ContentValues args = new ContentValues();
         args.put("nombre", nombre);
         args.put("apellidos", apellidos);
-        getWritableDatabase().update(DATABASE_TABLE, args, "_id=" + rowId, null);
+        db.update(DATABASE_TABLE_MUSICO, args, "_id=" + rowId, null);
+
     }
 
     public Cursor getAllRows() {
         try {
-            return getReadableDatabase().query(DATABASE_TABLE, new String[]{
+            return db.query(DATABASE_TABLE_MUSICO, new String[]{
                     "_id", "nombre", "apellidos"}, null, null, null, null, null);
         } catch (SQLException e) {
             Log.e("Exception on query", e.toString());
@@ -127,13 +122,4 @@ public class MusicoDbHelper extends SQLiteOpenHelper {
     }
 
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int versionAntigua, int versionNueva) {
-
-    }
 }

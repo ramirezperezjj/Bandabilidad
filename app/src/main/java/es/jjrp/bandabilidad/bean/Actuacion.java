@@ -3,6 +3,8 @@ package es.jjrp.bandabilidad.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import es.jjrp.bandabilidad.utils.Constantes;
+
 
 /**
  * Representa a una actuacion
@@ -17,6 +19,10 @@ public class Actuacion implements Serializable {
     public String ciudad;
     public double precio;
 
+    @Override
+    public String toString() {
+        return nombre + ". " + tipo.name() + " (" + Constantes.SDF.format(fecha) + ")";
+    }
 
     public enum TIPO {
         PROCESION, PASACALLES, CONCIERTO, ROMERIA;

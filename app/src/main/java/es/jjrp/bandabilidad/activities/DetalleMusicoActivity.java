@@ -27,7 +27,7 @@ public class DetalleMusicoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_musico);
-        pHelper = new MusicoDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
+        pHelper = new MusicoDbHelper(this);
         musico = (Musico) getIntent().getSerializableExtra("musico");
         btnBorrar = (Button) findViewById(R.id.btnDetalleBorrar);
         btnGuardar = (Button) findViewById(R.id.btnDetalleGuardar);

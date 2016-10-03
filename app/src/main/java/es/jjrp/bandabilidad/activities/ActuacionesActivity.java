@@ -24,7 +24,7 @@ public class ActuacionesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actuaciones);
-        dbActuaciones = new ActuacionDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
+        dbActuaciones = new ActuacionDbHelper(this);
 
         FloatingActionButton b = (FloatingActionButton) findViewById(R.id.fbtnNuevaActuacion);
         b.setOnClickListener(new View.OnClickListener() {

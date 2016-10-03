@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import es.jjrp.bandabilidad.R;
+import es.jjrp.bandabilidad.dbhelpers.BaseDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //para forzar la inicialización de la base de datos
+        BaseDbHelper dbHelper = new BaseDbHelper(this);
         Button b = (Button) findViewById(R.id.btnMainMusicos);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 }

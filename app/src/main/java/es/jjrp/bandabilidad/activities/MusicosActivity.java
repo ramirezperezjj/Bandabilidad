@@ -13,7 +13,6 @@ import es.jjrp.bandabilidad.R;
 import es.jjrp.bandabilidad.adapters.MusicoArrayAdapter;
 import es.jjrp.bandabilidad.bean.Musico;
 import es.jjrp.bandabilidad.dbhelpers.MusicoDbHelper;
-import es.jjrp.bandabilidad.utils.Constantes;
 
 public class MusicosActivity extends AppCompatActivity {
     private static final int NUEVO_MUSICO_REQUEST = 1;
@@ -37,7 +36,7 @@ public class MusicosActivity extends AppCompatActivity {
         });
 
 
-        pHelper = new MusicoDbHelper(this, Constantes.DATABASE_NAME, null, Constantes.DATABASE_VERSION);
+        pHelper = new MusicoDbHelper(this);
 
         cargarMusicos();
     }

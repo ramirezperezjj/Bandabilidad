@@ -3,8 +3,6 @@ package es.jjrp.bandabilidad.dbhelpers;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,22 +15,11 @@ import es.jjrp.bandabilidad.utils.Constantes;
 /**
  * Created by Juanjo on 03/09/2016.
  */
-public class ActuacionDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_CREATE_ACTUACION =
-            "create table IF NOT EXISTS ACTUACION(_id integer primary key autoincrement, "
-                    + "tipo integer not null,"
-                    + "fecha datetime,"
-                    + "horas integer,"
-                    + "nombre text not null,"
-                    + "ciudad text,"
-                    + "precio real"
-                    + ");";
-
-    private static final String DATABASE_TABLE_ACTUACION = "ACTUACION";
+public class ActuacionDbHelper extends BaseDbHelper {
 
 
-    public ActuacionDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public ActuacionDbHelper(Context context) {
+        super(context);
     }
 
 
@@ -51,19 +38,6 @@ public class ActuacionDbHelper extends SQLiteOpenHelper {
 //        }
 //    }
 
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE_ACTUACION);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
-        db.execSQL("DROP TABLE IF EXISTS ACTUACION");
-
-        //Se crea la nueva versión de la tabla
-        db.execSQL(DATABASE_CREATE_ACTUACION);
-    }
 
     public void createActuacion(Actuacion.TIPO tipo, String nombre, Date fecha, int horas, String ciudad, double precio) {
 
