@@ -3,7 +3,6 @@ package es.jjrp.bandabilidad.dbhelpers;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.jjrp.bandabilidad.bean.Musico;
-import es.jjrp.bandabilidad.utils.Constantes;
 
 public class MusicoDbHelper extends BaseDbHelper {
 
@@ -77,6 +75,7 @@ public class MusicoDbHelper extends BaseDbHelper {
                 ret.add(row);
                 c.moveToNext();
             }
+            c.close();
         } catch (Exception e) {
             Log.e("Exception on query", e.toString());
         }
@@ -95,6 +94,7 @@ public class MusicoDbHelper extends BaseDbHelper {
             row.orden = c.getInt(posCol++);
             row.nombre = c.getString(posCol++);
             row.apellidos = c.getString(posCol++);
+            c.close();
             return row;
         } else {
             row._id = row.orden = -1;
@@ -109,16 +109,6 @@ public class MusicoDbHelper extends BaseDbHelper {
         args.put("apellidos", apellidos);
         db.update(DATABASE_TABLE_MUSICO, args, "_id=" + rowId, null);
 
-    }
-
-    public Cursor getAllRows() {
-        try {
-            return db.query(DATABASE_TABLE_MUSICO, new String[]{
-                    "_id", "nombre", "apellidos"}, null, null, null, null, null);
-        } catch (SQLException e) {
-            Log.e("Exception on query", e.toString());
-            return null;
-        }
     }
 
 
