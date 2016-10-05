@@ -78,4 +78,8 @@ public class FaltaDbHelper extends BaseDbHelper {
         return ret;
     }
 
+    public void deleteFaltaById(long rowId) {
+        getWritableDatabase().delete(DATABASE_TABLE_FALTA, "_id=" + rowId, null);
+    }
+
 }

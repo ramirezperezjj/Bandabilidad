@@ -12,8 +12,8 @@
     <string name="numero">Número</string>
     <string name="orden">Orden</string>
     <string name="guardar">Guardar</string>
-    <string name="dialog_borrar_message">Se borrará el músico seleccionado</string>
-    <string name="dialog_borrar_title">Borrar músico</string>
+    <string name="dialog_borrar_message">Se borrará el seleccionado</string>
+    <string name="dialog_borrar_title">Borrar elemento</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="actuacion">Actuación</string>
